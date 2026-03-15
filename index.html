@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Prediction</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="blood-bg">
+        <div class="cell cell-1"></div>
+        <div class="cell cell-2"></div>
+        <div class="cell cell-3"></div>
+        <div class="cell cell-4"></div>
+        <div class="cell cell-5"></div>
+        <div class="cell cell-6"></div>
+        <div class="cell cell-7"></div>
+        <div class="cell cell-8"></div>
+    </div>
+    <div class="app-container">
+        <header>
+           
+                <!-- <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"></path>
+                </svg> -->
+            
+            <h1>CardioPredict</h1>
+            <p>Advanced Heart Disease Risk Assessment</p>
+        </header>
+
+        <main>
+            <form id="prediction-form">
+                <div class="form-grid">
+                    <!-- Column 1 -->
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="number" id="age" name="age" min="0" max="120" placeholder="e.g. 45" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sex">Sex</label>
+                        <select id="sex" name="sex" required>
+                            <option value="">Select...</option>
+                            <option value="1">Male</option>
+                            <option value="0">Female</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cp">Chest Pain Type</label>
+                        <select id="cp" name="cp" required>
+                            <option value="">Select...</option>
+                            <option value="0">Typical Angina</option>
+                            <option value="1">Atypical Angina</option>
+                            <option value="2">Non-anginal Pain</option>
+                            <option value="3">Asymptomatic</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="trestbps">Resting Blood Pressure (mm Hg)</label>
+                        <input type="number" id="trestbps" name="trestbps" placeholder="e.g. 120" required>
+                    </div>
+
+                    <!-- Column 2 -->
+                    <div class="form-group">
+                        <label for="chol">Serum Cholesterol (mg/dl)</label>
+                        <input type="number" id="chol" name="chol" placeholder="e.g. 200" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fbs">Fasting Blood Sugar > 120 mg/dl</label>
+                        <select id="fbs" name="fbs" required>
+                            <option value="">Select...</option>
+                            <option value="1">Yes (True)</option>
+                            <option value="0">No (False)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="restecg">Resting ECG Results</label>
+                        <select id="restecg" name="restecg" required>
+                            <option value="">Select...</option>
+                            <option value="0">Normal</option>
+                            <option value="1">ST-T Wave Abnormality</option>
+                            <option value="2">Left Ventricular Hypertrophy</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="thalach">Max Heart Rate Achieved</label>
+                        <input type="number" id="thalach" name="thalach" placeholder="e.g. 150" required>
+                    </div>
+
+                    <!-- Column 3 -->
+                    <div class="form-group">
+                        <label for="exang">Exercise Induced Angina</label>
+                        <select id="exang" name="exang" required>
+                            <option value="">Select...</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="oldpeak">ST Depression (Oldpeak)</label>
+                        <input type="number" id="oldpeak" name="oldpeak" step="0.1" placeholder="e.g. 1.0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="slope">Slope of Peak Exercise ST Segment</label>
+                        <select id="slope" name="slope" required>
+                            <option value="">Select...</option>
+                            <option value="0">Upsloping</option>
+                            <option value="1">Flat</option>
+                            <option value="2">Downsloping</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ca">Number of Major Vessels (0-4)</label>
+                        <input type="number" id="ca" name="ca" min="0" max="4" placeholder="e.g. 0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="thal">Thal Defect</label>
+                        <select id="thal" name="thal" required>
+                            <option value="">Select...</option>
+                            <option value="0">Normal (0)</option>
+                            <option value="1">Fixed Defect (1)</option>
+                            <option value="2">Reversible Defect (2)</option>
+                            <option value="3">Other (3)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-action">
+                    <button type="submit" id="predict-btn">
+                        <span>Analyze Risk Profile</span>
+                        <div class="spinner" id="btn-spinner" style="display: none;"></div>
+                    </button>
+                </div>
+            </form>
+
+            <div id="result-container" class="result-box hidden">
+                <div class="result-header">
+                    <h2>Diagnosis Result</h2>
+                    <span id="risk-badge" class="badge">Risk</span>
+                </div>
+                <div class="result-body">
+                    <div class="prob-section">
+                        <h3>Disease Probability</h3>
+                        <div class="progress-bar-bg">
+                            <div id="prob-bar" class="progress-bar-fill"></div>
+                        </div>
+                        <p id="prob-text" class="prob-val">0%</p>
+                    </div>
+                    <div class="interpretation">
+                        <p id="result-message">Please submit the form to see the results.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="error-message" class="error-box hidden">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <span id="error-text">An error occurred.</span>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
